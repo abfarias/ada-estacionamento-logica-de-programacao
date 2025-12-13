@@ -23,13 +23,7 @@ void main() {
 
     exibirTitulo();
 
-    String menu;
-    menu = """
-            Opções
-                1 - Adicionar número de placa
-                2 - Sair do programa
-            """;
-    IO.println(menu);
+    exibirMenu();
 
     Scanner scanner = new Scanner(System.in);
     boolean valido = false;
@@ -57,6 +51,16 @@ void main() {
             scanner.next();
         }
     }
+}
+
+private static void exibirMenu() {
+    String menu;
+    menu = """
+            Opções
+                1 - Adicionar número de placa
+                2 - Sair do programa
+            """;
+    IO.println(menu);
 }
 
 public static void exibirTitulo() {

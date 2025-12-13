@@ -4,7 +4,3 @@
 # Arquivos compilados Java
 *.class
 out/
-
-# Arquivos temporários
-*.log
-*.tmp

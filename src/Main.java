@@ -39,13 +39,21 @@ void main() {
             int opcao = scanner.nextInt();
 
             if (opcao < 1 || opcao > 2) {
-                IO.println("Entrada inválida. Digite um número inteiro dentre as opções apresentadas.");
+                IO.println("""
+                              Opção não encontrada. Digite:
+                              1 - Para Adicionar número de placa
+                              2 - Para sair do programa
+                              """);
             } else {
                 valido = true;
             }
 
         } catch (InputMismatchException e) {
-            IO.println("Entrada inválida. Digite um número inteiro dentre as opções apresentadas.");
+            IO.println("""
+                          Entrada inválida. Digite:
+                          1 - Para Adicionar número de placa
+                          2 - Para sair do programa
+                          """);
             scanner.next();
         }
     }

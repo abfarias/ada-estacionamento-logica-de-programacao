@@ -13,12 +13,12 @@ void main() {
     // Informar o limite de vagas do estacionamento
     // Solicitar a placa do veiculo (formato XXX-0000)
     // Verificar se ja existe um veiculo com a placa informada
-        // Sim:
-            // Remover da base de dados e informar que o veiculo saiu do estacionamento, demonstrando o tempo de residencia e o valor a ser pago
-        // Senao:
-            // Verificar se o estacionamento esta cheio
-                // Sim: informar que o estacionamento esta cheio
-                // Senao: Adicionar a base de dados e informar que o veiculo entrou no estacionamento
+    // Sim:
+    // Remover da base de dados e informar que o veiculo saiu do estacionamento, demonstrando o tempo de residencia e o valor a ser pago
+    // Senao:
+    // Verificar se o estacionamento esta cheio
+    // Sim: informar que o estacionamento esta cheio
+    // Senao: Adicionar a base de dados e informar que o veiculo entrou no estacionamento
     // Demonstrar o relatorio de veiculos no estacionamento
 
     exibirTitulo();
@@ -26,30 +26,57 @@ void main() {
     exibirMenu();
 
     Scanner scanner = new Scanner(System.in);
-    boolean valido = false;
 
-    while (!valido) {
+    // Validacao de entrada
+    int opcao = 0;
+    while (true) {
         try {
-            int opcao = scanner.nextInt();
+            opcao = scanner.nextInt();
 
             if (opcao < 1 || opcao > 2) {
                 IO.println("""
-                              Opção não encontrada. Digite:
-                              1 - Para Adicionar número de placa
-                              2 - Para sair do programa
-                              """);
-            } else {
-                valido = true;
-            }
+                        Opção não encontrada. Digite:
+                        1 - Para Adicionar número de placa
+                        2 - Para sair do programa
+                        """);
+            } else { break; }
 
         } catch (InputMismatchException e) {
             IO.println("""
-                          Entrada inválida. Digite:
-                          1 - Para Adicionar número de placa
-                          2 - Para sair do programa
-                          """);
+                    Entrada inválida. Digite:
+                    1 - Para Adicionar número de placa
+                    2 - Para sair do programa
+                    """);
             scanner.next();
         }
+    }
+
+    switch (opcao) {
+        case 1: {
+            // Executar programa
+            IO.println("Programa em desenvolvimento");
+
+            // Solicitar a placa do veículo (formato XXX-0000)
+            String numeroDePlaca;
+
+            while (true) {
+                IO.println("Informe o número de placa (XXX-0000)");
+                 numeroDePlaca = scanner.next();
+
+                if (numeroDePlaca.matches("[A-Z]{3}-\\d{4}")) {
+                    break;
+                }
+                IO.println("Formato invalido");
+            }
+            IO.println("Placa valida: " + numeroDePlaca);
+
+
+
+            break;
+        }
+        case 2: // Sair do programa
+            IO.println("Tchau! obrigado por visitar nosso estacionamento!");
+            break;
     }
 }
 
@@ -75,3 +102,4 @@ public static void exibirTitulo() {
             """);
     // ref:https://patorjk.com/software/taag/#p=display&f=ANSI+Regular&t=&x=none&v=4&h=4&w=80&w
 }
+

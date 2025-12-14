@@ -26,6 +26,8 @@ void main() {
     exibirMenu();
 
     Scanner scanner = new Scanner(System.in);
+    Map<String, LocalDateTime> carros = new HashMap<>();
+    carros.put("AAA-1111", LocalDateTime.now());
 
     // Validacao de entrada
     int opcao = 0;
@@ -61,7 +63,7 @@ void main() {
 
             while (true) {
                 IO.println("Informe o número de placa (XXX-0000)");
-                 numeroDePlaca = scanner.next();
+                numeroDePlaca = scanner.next();
 
                 if (numeroDePlaca.matches("[A-Z]{3}-\\d{4}")) {
                     break;
@@ -70,7 +72,25 @@ void main() {
             }
             IO.println("Placa valida: " + numeroDePlaca);
 
-
+            // Verificar se existe um carro com a placa inserida
+            if (carros.containsKey(numeroDePlaca)) {
+                // Calcular tempo de permanencia
+                Duration tempoDePermanecia = Duration.between(carros.get(numeroDePlaca), LocalDateTime.now());
+                // Calcular valor a ser cobrado
+                // Remover carro do array
+                carros.remove(numeroDePlaca);
+                // Informar saida do carro com tempo de permanencia e valor a ser cobrado
+                IO.println("Saída do veículo placa " + numeroDePlaca + ". Tempo no estacionamento " + tempoDePermanecia.toMinutes() + " minutos" + ". Valor a ser cobrado ");
+                // Demonstrar relatorio do estacionamento
+                // Mostrar as opcoes do menu novamente
+            } else {
+                // Adicionar o carro no array
+                carros.put(numeroDePlaca, LocalDateTime.now());
+                // Informar entrada do carro
+                IO.println("Entrada do veículo placa " + numeroDePlaca + " realizada.");
+                // Demonstrar relatorio do estacionamento
+                // Mostrar as opcoes do menu novamente
+            }
 
             break;
         }

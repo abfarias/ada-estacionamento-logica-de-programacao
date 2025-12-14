@@ -1,48 +1,12 @@
 void main() {
 
-    exibirTitulo();
-
-    exibirMenu();
-
     Scanner scanner = new Scanner(System.in);
 
     Map<String, LocalDateTime> carros = new HashMap<>();
-    carros.put("AAA-1111", LocalDateTime.now());
-
     ArrayList<String> registroDeSaidas = new ArrayList<>();
 
-    // Validacao de entrada
-    int opcao = 0;
-    while (true) {
-        try {
-            opcao = scanner.nextInt();
+    exibirMenu(scanner, carros, registroDeSaidas);
 
-            if (opcao < 1 || opcao > 2) {
-                IO.println("""
-                        Opção não encontrada. Digite:
-                        1 - Para Adicionar número de placa
-                        2 - Para sair do programa
-                        """);
-            } else { break; }
-
-        } catch (InputMismatchException e) {
-            IO.println("""
-                    Entrada inválida. Digite:
-                    1 - Para Adicionar número de placa
-                    2 - Para sair do programa
-                    """);
-            scanner.next();
-        }
-    }
-
-    switch (opcao) {
-        case 1:
-            registrarCarro(scanner, carros, registroDeSaidas);
-            break;
-        case 2:
-            IO.println("Tchau! obrigado por visitar nosso estacionamento!");
-            break;
-    }
 }
 
 private static void registrarCarro(Scanner scanner, Map<String, LocalDateTime> carros, ArrayList<String> registroDeSaidas) {
@@ -89,6 +53,7 @@ private static void registrarCarro(Scanner scanner, Map<String, LocalDateTime> c
         demonstrarRelatorio(carros, registroDeSaidas);
 
         // Mostrar as opcoes do menu novamente
+        exibirMenu(scanner, carros, registroDeSaidas);
 
     } else {
 
@@ -102,7 +67,7 @@ private static void registrarCarro(Scanner scanner, Map<String, LocalDateTime> c
         demonstrarRelatorio(carros, registroDeSaidas);
 
         // Mostrar as opcoes do menu novamente
-
+        exibirMenu(scanner, carros, registroDeSaidas);
     }
 }
 
@@ -166,7 +131,9 @@ private static double calcularCobranca(long minutos) {
     return valor;
 }
 
-private static void exibirMenu() {
+private static void exibirMenu(Scanner scanner, Map<String, LocalDateTime> carros, ArrayList<String> registroDeSaidas) {
+
+    exibirTitulo();
     String menu;
     menu = """
             Opções
@@ -174,6 +141,39 @@ private static void exibirMenu() {
                 2 - Sair do programa
             """;
     IO.println(menu);
+
+    // Validacao de entrada
+    int opcao = 0;
+    while (true) {
+        try {
+            opcao = scanner.nextInt();
+
+            if (opcao < 1 || opcao > 2) {
+                IO.println("""
+                        Opção não encontrada. Digite:
+                        1 - Para Adicionar número de placa
+                        2 - Para sair do programa
+                        """);
+            } else { break; }
+
+        } catch (InputMismatchException e) {
+            IO.println("""
+                    Entrada inválida. Digite:
+                    1 - Para Adicionar número de placa
+                    2 - Para sair do programa
+                    """);
+            scanner.next();
+        }
+    }
+
+    switch (opcao) {
+        case 1:
+            registrarCarro(scanner, carros, registroDeSaidas);
+            break;
+        case 2:
+            IO.println("Tchau! obrigado por visitar nosso estacionamento!");
+            break;
+    }
 }
 
 public static void exibirTitulo() {
@@ -188,4 +188,3 @@ public static void exibirTitulo() {
             """);
     // ref:https://patorjk.com/software/taag/#p=display&f=ANSI+Regular&t=&x=none&v=4&h=4&w=80&w
 }
-

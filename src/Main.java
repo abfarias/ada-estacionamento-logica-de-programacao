@@ -101,32 +101,7 @@ void main() {
                         ". Valor a ser cobrado " + valor);
 
                 // Demonstrar relatorio do estacionamento
-                IO.println("\n===============================================================\n");
-                IO.println("VEÍCULOS ESTACIONADOS");
-
-                for (var carro: carros.entrySet()) {
-
-                    LocalDateTime horaDeEntrada = carro.getValue();
-
-                    DateTimeFormatter formato =
-                            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-
-                    String horaDeEntradaFormatada = horaDeEntrada.format(formato);
-
-                    IO.println(
-                            "\tPlaca " + carro.getKey() +
-                            " \t\tHora de entrada: " + horaDeEntradaFormatada
-                    );
-                }
-
-                IO.println("\n");
-
-                IO.println("REGISTRO DE SAÍDAS");
-                for (String relatorio : registroDeSaidas) {
-                    IO.println("\t" + relatorio);
-                }
-
-                IO.println("\n\n================================================================");
+                demonstrarRelatorio(carros, registroDeSaidas);
 
                 // Mostrar as opcoes do menu novamente
 
@@ -139,32 +114,7 @@ void main() {
                 IO.println("Entrada do veículo placa " + numeroDePlaca + " realizada.");
 
                 // Demonstrar relatorio do estacionamento
-                IO.println("\n===============================================================\n");
-                IO.println("VEÍCULOS ESTACIONADOS");
-
-                for (var carro: carros.entrySet()) {
-
-                    LocalDateTime horaDeEntrada = carro.getValue();
-
-                    DateTimeFormatter formato =
-                            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-
-                    String horaDeEntradaFormatada = horaDeEntrada.format(formato);
-
-                    IO.println(
-                            "\tPlaca " + carro.getKey() +
-                            " \t\tHora de entrada: " + horaDeEntradaFormatada
-                    );
-                }
-
-                IO.println("\n");
-
-                IO.println("REGISTRO DE SAÍDAS");
-                for (String relatorio : registroDeSaidas) {
-                    IO.println("\t" + relatorio);
-                }
-
-                IO.println("\n\n================================================================");
+                demonstrarRelatorio(carros, registroDeSaidas);
 
                 // Mostrar as opcoes do menu novamente
 
@@ -176,6 +126,35 @@ void main() {
             IO.println("Tchau! obrigado por visitar nosso estacionamento!");
             break;
     }
+}
+
+private static void demonstrarRelatorio(Map<String, LocalDateTime> carros, ArrayList<String> registroDeSaidas) {
+    IO.println("\n===============================================================\n");
+    IO.println("VEÍCULOS ESTACIONADOS");
+
+    for (var carro: carros.entrySet()) {
+
+        LocalDateTime horaDeEntrada = carro.getValue();
+
+        DateTimeFormatter formato =
+                DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+        String horaDeEntradaFormatada = horaDeEntrada.format(formato);
+
+        IO.println(
+                "\tPlaca " + carro.getKey() +
+                " \t\tHora de entrada: " + horaDeEntradaFormatada
+        );
+    }
+
+    IO.println("\n");
+
+    IO.println("REGISTRO DE SAÍDAS");
+    for (String relatorio : registroDeSaidas) {
+        IO.println("\t" + relatorio);
+    }
+
+    IO.println("\n\n================================================================");
 }
 
 private static double calcularCobranca(long minutos) {

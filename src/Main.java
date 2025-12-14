@@ -77,6 +77,7 @@ void main() {
 
             // Verificar se existe um carro com a placa inserida
             if (carros.containsKey(numeroDePlaca)) {
+
                 // Calcular tempo de permanencia
                 Duration tempoDePermanencia = Duration.between(carros.get(numeroDePlaca), LocalDateTime.now());
 
@@ -88,7 +89,7 @@ void main() {
                 if (minutos <= 5) {
                    valor = 0;
                 }
-                // Acima de 5 minutos ate 60 minutos -> 1 hora (5 reais)
+                // Acima de 5 minutos até 60 minutos -> 1 hora (5 reais)
                 else if (minutos <= 60) {
                     valor = 5;
                 }
@@ -113,21 +114,88 @@ void main() {
                 }
 
                 // Salvar relatorio de saida
+                String relatorioDeSaida = "Placa " + numeroDePlaca +
+                        " - tempo permanência: " + minutos + " minutos" +
+                        " - valor cobrado: " + valor;
+
+                registroDeSaidas.add(relatorioDeSaida);
+
                 // Remover carro do array
                 carros.remove(numeroDePlaca);
+
                 // Informar saida do carro com tempo de permanencia e valor a ser cobrado
                 IO.println("Saída do veículo placa " + numeroDePlaca +
                         ". Tempo no estacionamento " + minutos + " minutos" +
                         ". Valor a ser cobrado " + valor);
+
                 // Demonstrar relatorio do estacionamento
+                IO.println("\n===============================================================\n");
+                IO.println("VEÍCULOS ESTACIONADOS");
+
+                for (var carro: carros.entrySet()) {
+
+                    LocalDateTime horaDeEntrada = carro.getValue();
+
+                    DateTimeFormatter formato =
+                            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+                    String horaDeEntradaFormatada = horaDeEntrada.format(formato);
+
+                    IO.println(
+                            "\tPlaca " + carro.getKey() +
+                            " \t\tHora de entrada: " + horaDeEntradaFormatada
+                    );
+                }
+
+                IO.println("\n");
+
+                IO.println("REGISTRO DE SAÍDAS");
+                for (String relatorio : registroDeSaidas) {
+                    IO.println("\t" + relatorio);
+                }
+
+                IO.println("\n\n================================================================");
+
                 // Mostrar as opcoes do menu novamente
+
             } else {
+
                 // Adicionar o carro no array
                 carros.put(numeroDePlaca, LocalDateTime.now());
+
                 // Informar entrada do carro
                 IO.println("Entrada do veículo placa " + numeroDePlaca + " realizada.");
+
                 // Demonstrar relatorio do estacionamento
+                IO.println("\n===============================================================\n");
+                IO.println("VEÍCULOS ESTACIONADOS");
+
+                for (var carro: carros.entrySet()) {
+
+                    LocalDateTime horaDeEntrada = carro.getValue();
+
+                    DateTimeFormatter formato =
+                            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+                    String horaDeEntradaFormatada = horaDeEntrada.format(formato);
+
+                    IO.println(
+                            "\tPlaca " + carro.getKey() +
+                            " \t\tHora de entrada: " + horaDeEntradaFormatada
+                    );
+                }
+
+                IO.println("\n");
+
+                IO.println("REGISTRO DE SAÍDAS");
+                for (String relatorio : registroDeSaidas) {
+                    IO.println("\t" + relatorio);
+                }
+
+                IO.println("\n\n================================================================");
+
                 // Mostrar as opcoes do menu novamente
+
             }
 
             break;

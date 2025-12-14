@@ -80,38 +80,10 @@ void main() {
 
                 // Calcular tempo de permanencia
                 Duration tempoDePermanencia = Duration.between(carros.get(numeroDePlaca), LocalDateTime.now());
-
-                // Calcular valor a ser cobrado
-                double valor = 0;
                 long minutos = tempoDePermanencia.toMinutes();
 
-                // 0 a 5 minutos -> gratis
-                if (minutos <= 5) {
-                   valor = 0;
-                }
-                // Acima de 5 minutos até 60 minutos -> 1 hora (5 reais)
-                else if (minutos <= 60) {
-                    valor = 5;
-                }
-                // Acima de 1 hora -> 5 reais + 6 * por hora adicional (fracao de minutos conta)
-                else {
-                    // Minutos excedentes a primeira hora
-                    long minutosExtras = minutos - 60;
-
-                    // Horas extras sem contar minutos que possam ter sobrado
-                    long horasExtras = minutosExtras / 60;
-
-
-                    /*
-                        Se o resultado for diferente de 0, significa que a divisao nao e inteira,
-                        ou seja, sobra minutos que devem ser contados como 1 hora adicional
-                     */
-                    if (minutosExtras % 60 != 0) {
-                        horasExtras++;
-                    }
-
-                    valor = 5 + (6 * horasExtras);
-                }
+                // Calcular valor a ser cobrado
+                double valor = calcularCobranca(minutos);
 
                 // Salvar relatorio de saida
                 String relatorioDeSaida = "Placa " + numeroDePlaca +
@@ -204,6 +176,37 @@ void main() {
             IO.println("Tchau! obrigado por visitar nosso estacionamento!");
             break;
     }
+}
+
+private static double calcularCobranca(long minutos) {
+    double valor;
+    if (minutos <= 5) {
+        valor = 0;
+    }
+    // Acima de 5 minutos até 60 minutos -> 1 hora (5 reais)
+    else if (minutos <= 60) {
+        valor = 5;
+    }
+    // Acima de 1 hora -> 5 reais + 6 * por hora adicional (fracao de minutos conta)
+    else {
+        // Minutos excedentes a primeira hora
+        long minutosExtras = minutos - 60;
+
+        // Horas extras sem contar minutos que possam ter sobrado
+        long horasExtras = minutosExtras / 60;
+
+
+        /*
+            Se o resultado for diferente de 0, significa que a divisao nao e inteira,
+            ou seja, sobra minutos que devem ser contados como 1 hora adicional
+         */
+        if (minutosExtras % 60 != 0) {
+            horasExtras++;
+        }
+
+        valor = 5 + (6 * horasExtras);
+    }
+    return valor;
 }
 
 private static void exibirMenu() {

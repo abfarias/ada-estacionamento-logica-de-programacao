@@ -26,8 +26,11 @@ void main() {
     exibirMenu();
 
     Scanner scanner = new Scanner(System.in);
+
     Map<String, LocalDateTime> carros = new HashMap<>();
     carros.put("AAA-1111", LocalDateTime.now());
+
+    ArrayList<String> registroDeSaidas = new ArrayList<>();
 
     // Validacao de entrada
     int opcao = 0;
@@ -75,12 +78,47 @@ void main() {
             // Verificar se existe um carro com a placa inserida
             if (carros.containsKey(numeroDePlaca)) {
                 // Calcular tempo de permanencia
-                Duration tempoDePermanecia = Duration.between(carros.get(numeroDePlaca), LocalDateTime.now());
+                Duration tempoDePermanencia = Duration.between(carros.get(numeroDePlaca), LocalDateTime.now());
+
                 // Calcular valor a ser cobrado
+                double valor = 0;
+                long minutos = tempoDePermanencia.toMinutes();
+
+                // 0 a 5 minutos -> gratis
+                if (minutos <= 5) {
+                   valor = 0;
+                }
+                // Acima de 5 minutos ate 60 minutos -> 1 hora (5 reais)
+                else if (minutos <= 60) {
+                    valor = 5;
+                }
+                // Acima de 1 hora -> 5 reais + 6 * por hora adicional (fracao de minutos conta)
+                else {
+                    // Minutos excedentes a primeira hora
+                    long minutosExtras = minutos - 60;
+
+                    // Horas extras sem contar minutos que possam ter sobrado
+                    long horasExtras = minutosExtras / 60;
+
+
+                    /*
+                        Se o resultado for diferente de 0, significa que a divisao nao e inteira,
+                        ou seja, sobra minutos que devem ser contados como 1 hora adicional
+                     */
+                    if (minutosExtras % 60 != 0) {
+                        horasExtras++;
+                    }
+
+                    valor = 5 + (6 * horasExtras);
+                }
+
+                // Salvar relatorio de saida
                 // Remover carro do array
                 carros.remove(numeroDePlaca);
                 // Informar saida do carro com tempo de permanencia e valor a ser cobrado
-                IO.println("Saída do veículo placa " + numeroDePlaca + ". Tempo no estacionamento " + tempoDePermanecia.toMinutes() + " minutos" + ". Valor a ser cobrado ");
+                IO.println("Saída do veículo placa " + numeroDePlaca +
+                        ". Tempo no estacionamento " + minutos + " minutos" +
+                        ". Valor a ser cobrado " + valor);
                 // Demonstrar relatorio do estacionamento
                 // Mostrar as opcoes do menu novamente
             } else {
